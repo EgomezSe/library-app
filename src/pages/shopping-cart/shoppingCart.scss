@@ -1,0 +1,34 @@
+.shopping-cart {
+    width: 100% !important;
+    margin-bottom: 8px;
+
+}
+
+.shopping-img {
+    height: 180px;
+    width: 125px;
+}
+
+.pay  {
+    width: 100%;
+    display: flex;
+    margin: auto;
+
+    &__margin {
+        margin: 16px 8px;
+    }
+}
+
+@media (min-width: 768px) {
+    .pay  {
+        width: 50%;
+    }
+}
+
+@media (min-width: 1025px) {
+    .pay  {
+        &__margin {
+            margin: 32px 16px;
+        }
+    }
+}

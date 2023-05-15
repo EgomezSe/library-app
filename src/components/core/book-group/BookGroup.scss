@@ -1,0 +1,17 @@
+.card {
+    width: 9.5rem !important;
+}
+
+.img-height {
+    height: 200px;
+}
+
+.propover {
+    background-color: #95E077;
+}
+
+@media (min-width: 600px) {
+    .card {
+        width: 18rem !important;
+    }
+}

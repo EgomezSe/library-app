@@ -1,0 +1,43 @@
+.card-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    &__slider {
+        display: flex;
+        justify-content: space-between;
+        overflow-x: scroll;
+        overscroll-behavior-x: contain;
+        scroll-snap-type: x;
+
+        &__card {
+            width: 289px;
+            height: 411px;
+            margin-right: 8px;
+        }
+    }
+
+}
+.card {
+    width: 9.5rem !important;
+}
+
+.img-height {
+    max-height: 200px;
+}
+
+.button-card {
+    margin-left: 0;
+    margin-top: 16px;
+}
+
+@media (min-width: 600px) {
+    .card {
+        width: 15rem !important;
+    }
+    .button-card {
+        margin-left: 32px;
+        margin-top: 0;
+    }
+    
+}

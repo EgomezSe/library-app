@@ -1,0 +1,29 @@
+.contend {
+    margin: 0;
+    padding: 0;
+
+    &__body {
+        padding: 16px ;
+    }
+
+}
+
+@media (min-width: 768px) {
+    .contend {
+    
+        &__body {
+            padding: 32px ;
+        }
+    
+    }
+}
+
+
+@media (min-width: 1024px) {
+    .contend {
+    &__body {
+        max-width: 1300px;
+        margin: auto;
+    }
+}
+}

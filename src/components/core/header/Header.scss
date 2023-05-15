@@ -1,0 +1,107 @@
+.header-content {
+    position: sticky;
+    top: 0px;
+    right: 0px;
+    left: 0px;
+    display: flex;
+    height: 108px;
+    width: 100%;
+    z-index: 10;
+    background-color: #000000;
+
+    &__menu {
+        background-color: #0097b3;
+
+        .grid {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            flex-direction: row;
+            width: 100%;
+
+            &__two {
+                justify-content: center;
+                width: 20%;
+            }
+
+            &__three {
+                justify-content: flex-end;
+                width: 20%;
+            }
+
+            &__four {
+                justify-content: flex-end;
+                width: 20%;
+            }
+
+            &__five {
+                justify-content: flex-end;
+                width: 20%;
+            }
+
+            &__six {
+                justify-content: flex-end;
+                width: 20%;
+            }
+        }
+
+    }
+
+    &__logo {
+        width: 100px;
+        height: 98px;
+        background-size: contain;
+        margin-left: 0;
+        background-image: url('https://i.pinimg.com/736x/be/5b/88/be5b883b404bb1b1e3a33b2c897f2e0c.jpg');
+    }
+
+    &__title {
+        color: #ffffff;
+        text-align: center;
+        margin: 0 80px;
+        position: absolute;
+        top: 50%;
+        -ms-transform: translateY(-50%);
+        transform: translateY(-56%);
+    }
+}
+
+.header-button {
+    background-color: #0097b3;
+    border: none;
+    color: white;
+    padding: 15px 6px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-left: 50%;
+    transform: translateX(-50%);
+}
+
+@media (min-width: 1024px) {
+    .header-content {
+        &__menu {
+            .grid {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-end;
+                flex-direction: row;
+                width: 50%;
+                margin: auto;
+            }
+    
+        }
+    }
+
+    .header-button {
+        background-color: #0097b3;
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+    }
+}
