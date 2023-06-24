@@ -5,31 +5,29 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom';
-import { useServiceEvent } from '../../store/book-info/book-info.hook';
-import { useBookListEvent } from '../../store/shopping-cart/shopping-cart.hook';
+import { useServiceEvent } from '../../hooks/book-info/book-info.hook';
+import { useShoppingCartEvent } from '../../hooks/shopping-cart/shopping-cart.hook';
 import './bookInfo.scss';
+import {RestAdapter} from "../../infrastructure/adapters/rest/rest.adapter.js";
 
 
 
 const BookInfo = () => {
 
     const { getPageInfo } = useServiceEvent();
-    const { setListBooksInfo, getListBooksInfo } = useBookListEvent();
+    const { setListBooksInfo, getListBooksInfo } = useShoppingCartEvent();
     const navigate = useNavigate();
 
     const infoBook = getPageInfo();
     const books = Object.values(getListBooksInfo());
-    console.log('infoBook', infoBook);
-
-    
 
     const addShoppingBook = (bookInfo) => {
-        books.push(bookInfo)
-        setListBooksInfo(books);
+        if(books.filter(value => value.isbn == bookInfo.isbn).length === 0) {
+            books.push(bookInfo)
+            setListBooksInfo(books);
+        }
         navigate('/shopping-card');
     }
-
-    console.log('infoBook 2', infoBook);
 
     return (
         <>
@@ -38,58 +36,42 @@ const BookInfo = () => {
                     <h2>Información General </h2>
                     <Row>
                         <Col xs={12} md={4}>
-                            <Image className='book-img' src={infoBook.img} rounded />
+                            <Image className='book-img' src={infoBook.urlImagen} rounded />
                         </Col>
                         <Col xs={12} md={8}>
                             <Table striped bordered hover responsive>
                                 <tbody>
                                     <tr>
+                                        <td>Título</td>
+                                        <td>{infoBook.titulo}</td>
+                                    </tr>
+                                    <tr>
                                         <td>Solicítelo como</td>
-                                        <td>{infoBook.additionalInfo.code}</td>
-
+                                        <td>{infoBook.id}</td>
                                     </tr>
                                     <tr>
                                         <td>ISBN</td>
-                                        <td>{infoBook.additionalInfo.isbn}</td>
-
+                                        <td>{infoBook.isbn}</td>
                                     </tr>
                                     <tr>
                                         <td >Autor</td>
-                                        <td>{infoBook.additionalInfo.author}</td>
-
+                                        <td>{infoBook.autor}</td>
                                     </tr>
                                     <tr>
-                                        <td>Título</td>
-                                        <td>{infoBook.title}</td>
-
-                                    </tr>
-                                    <tr>
-                                        <td>Edición</td>
-                                        <td>{infoBook.additionalInfo.edition}</td>
-
-                                    </tr>
-                                    <tr>
-                                        <td >Descr. Física</td>
-                                        <td>{infoBook.additionalInfo.physicalDesc}</td>
-
+                                        <td>Categoria</td>
+                                        <td>{infoBook.categoria}</td>
                                     </tr>
                                     <tr>
                                         <td>Resumen</td>
-                                        <td>{infoBook.additionalInfo.summary}</td>
-
-                                    </tr>
-                                    <tr>
-                                        <td>Cod. Idioma</td>
-                                        <td>{infoBook.additionalInfo.codLanguage}</td>
-
+                                        <td>{infoBook.descripcion}</td>
                                     </tr>
                                     <tr>
                                         <td >Existencias</td>
-                                        <td>{infoBook.additionalInfo.stock}</td>
+                                        <td>{ infoBook.cantidad }</td>
                                     </tr>
                                     <tr>
-                                        <td >Costo</td>
-                                        <td>$ {infoBook.cost}</td>
+                                        <td>Precio</td>
+                                        <td>$ {infoBook.precio}</td>
                                     </tr>
                                 </tbody>
                             </Table>

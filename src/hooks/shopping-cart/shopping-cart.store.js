@@ -2,18 +2,17 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = [];
 
-export const createBookListState = createSlice({
-  name: 'BookListState',
+export const createShoppingCartState = createSlice({
+  name: 'ShoppingCartState',
   initialState,
   reducers: {
     setBookListSelected(state, { payload }) {
-      console.log('el payload', payload);
       return payload;
     }
   }
 });
 
-export const useBookListSelected = createBookListState.actions.setBookListSelected;
+export const useBookListSelected = createShoppingCartState.actions.setBookListSelected;
 export const useBookListSelector = (state)=> {
-  return state.bookListState;
+  return state.shoppingCartState;
 };

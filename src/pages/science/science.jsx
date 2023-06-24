@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Layout from '../../components/core/layout/Layout';
 import BookGroup from '../../components/core/book-group/BookGroup';
 import InputSearch from '../../components/core/input-search/InputSearch';
 import { ScienceObject } from '../../assets/json/science';
 import './science.scss'
+import {useBooksListEvent} from "../../hooks/books-list/books-list.hook.js";
+import {useEffect, useState} from "react";
+import {SearchService} from "../../infrastructure/services/booksService.js";
+import Alert from 'react-bootstrap/Alert';
+import React from "react";
 
 
 
@@ -12,8 +15,21 @@ import './science.scss'
 
 const Science = () => {
 
-    const bookFilter = (event) => {
-        console.log('este es el libro que se va filtrar ', event);
+    const { getBooksListInfo } = useBooksListEvent();
+    const [books, setBooks] = useState([]);
+    const [show, setShow] = useState(false);
+
+
+    const scienceBooks = Object.values(getBooksListInfo()).filter( book => book.categoria === 'Ciencia');
+
+    useEffect(() => {
+        setBooks(scienceBooks)
+    }, []);
+
+    const bookFilter = async (event) => {
+        const booksList = await SearchService(event, 'ciencia');
+        setShow(booksList.length === 0 );
+        setBooks(booksList);
     }
 
     return (
@@ -29,7 +45,12 @@ const Science = () => {
                 <section>
                     <h2>Libros cientificos</h2>
                     <InputSearch onBookFilter={bookFilter}/>
-                    <BookGroup value={ScienceObject} />
+                    {show ?
+                        <Alert key='danger' variant='danger' onClose={() => setShow(false)} dismissible>
+                            No se encontraron libros, por favor intenta con otra palabra clave.
+                        </Alert> : <></>
+                    }
+                    <BookGroup value={books} />
 
                 </section>
             </Layout>

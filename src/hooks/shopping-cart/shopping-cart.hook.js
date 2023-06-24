@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useBookListSelected, useBookListSelector } from './shopping-cart.store';
 
-export const useBookListEvent = ()  => {
+export const useShoppingCartEvent = ()  => {
   const dispatch = useDispatch();
 
   const getListBooksInfo = () => {

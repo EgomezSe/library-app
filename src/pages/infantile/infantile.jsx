@@ -1,18 +1,33 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Layout from '../../components/core/layout/Layout';
 import MyCarousel from '../../components/core/carousel/Carousel';
 import BookGroup from '../../components/core/book-group/BookGroup';
 import InputSearch from '../../components/core/input-search/InputSearch';
-import { InfantileObject } from '../../assets/json/infantile';
+import {useBooksListEvent} from "../../hooks/books-list/books-list.hook.js";
+import {useEffect, useState} from "react";
+import {SearchService} from "../../infrastructure/services/booksService.js";
+import Alert from 'react-bootstrap/Alert';
+import React from "react";
 
 
 
 
 const Infantile = () => {
 
-    const bookFilter = (event) => {
-        console.log('este es el libro que se va filtrar ', event);
+    const { getBooksListInfo } = useBooksListEvent();
+    const [books, setBooks] = useState([]);
+    const [show, setShow] = useState(false);
+
+
+    const infantileBooks = Object.values(getBooksListInfo()).filter( book => book.categoria === 'Infantil');
+
+    useEffect(() => {
+        setBooks(infantileBooks)
+    }, []);
+
+    const bookFilter = async (event) => {
+        const booksList = await SearchService(event, 'infantil');
+        setShow(booksList.length === 0 );
+        setBooks(booksList);
     }
 
     return (
@@ -26,7 +41,12 @@ const Infantile = () => {
                 <section>
                     <h2>Libros para niños</h2>
                     <InputSearch onBookFilter={bookFilter} />
-                    <BookGroup value={InfantileObject} />
+                    {show ?
+                        <Alert key='danger' variant='danger' onClose={() => setShow(false)} dismissible>
+                            No se encontraron libros, por favor intenta con otra palabra clave.
+                        </Alert> : <></>
+                    }
+                    <BookGroup value={books} />
 
                 </section>
             </Layout>

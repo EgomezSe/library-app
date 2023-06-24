@@ -1,0 +1,36 @@
+.error-container {
+  text-align: center;
+  padding: 40px 0;
+  background: #EBF0F5;
+}
+
+.card-error{
+  background: white;
+  padding: 60px;
+  border-radius: 4px;
+  box-shadow: 0 2px 3px #C8D0D8;
+  margin: 0 auto;
+  &__content {
+    border-radius:200px;
+    height:200px;
+    width:200px;
+    background: #F8FAF5;
+    margin:0 auto
+  }
+}
+
+.checkmark-error {
+  color: #C94740;
+  font-size: 100px;
+  line-height: 200px;
+  margin-left: -15px;
+  font-style: italic;
+}
+
+.error-title {
+  color: #C94740;
+  font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
+  font-weight: 900;
+  font-size: 40px;
+  margin-bottom: 10px;
+}

@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Layout from '../../components/core/layout/Layout';
 import MyCarousel from '../../components/core/carousel/Carousel';
 import CarouselCard from '../../components/core/carousel-card/CarouselCard';
-import { NewsBooksObject } from '../../assets/json/newsBooks';
+import {useBooksListEvent} from "../../hooks/books-list/books-list.hook.js";
 
 
 
 const Dashboard = () => {
 
-    const novedades = NewsBooksObject;
+
+    const { getBooksListInfo } = useBooksListEvent();
+
+    const newBooks = Object.values(getBooksListInfo()).filter( book => book.categoria === "Novedad");
 
 
     return (
@@ -26,7 +27,7 @@ const Dashboard = () => {
                 </section>
                 <section>
                     <h2>Novedades</h2>
-                    <CarouselCard value={novedades}>
+                    <CarouselCard value={newBooks}>
                     </CarouselCard>
                 </section>
             </Layout>

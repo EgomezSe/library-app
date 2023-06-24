@@ -3,8 +3,8 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
-import { useServiceEvent } from '../../../store/book-info/book-info.hook';
-import { useBookListEvent } from '../../../store/shopping-cart/shopping-cart.hook';
+import { useServiceEvent } from '../../../hooks/book-info/book-info.hook';
+import { useShoppingCartEvent } from '../../../hooks/shopping-cart/shopping-cart.hook';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Popover from 'react-bootstrap/Popover';
 import './CarouselCard.scss';
@@ -14,7 +14,7 @@ function CarouselCard({ value }) {
 
     const navigate = useNavigate();
     const { setPageInfo } = useServiceEvent();
-    const { setListBooksInfo, getListBooksInfo } = useBookListEvent();
+    const { setListBooksInfo, getListBooksInfo } = useShoppingCartEvent();
 
     const books = Object.values(getListBooksInfo());
 
@@ -38,14 +38,14 @@ const viewCards = (cardsInfo) => {
         cardItems.push(
             <div className='card-container__slider__card' key={index}>
                 <Card style={{ width: '18rem' }}>
-                    <Card.Img className='img-height' variant="top" src={element.img} />
+                    <Card.Img className='img-height' variant="top" src={element.urlImagen} />
                     <Card.Body>
-                        <Card.Title>{element.title}</Card.Title>
+                        <Card.Title>{element.titulo}</Card.Title>
                         <Card.Text>
-                            {element.subtitle}
+                            {element.descripcion.substr(0, 100)} ...
                         </Card.Text>
-                        <Card.Title>{`$ ${element.cost}`}</Card.Title>
-                        <Button variant="primary" onClick={() => sendEvenNavigate('/book-info', element)}>ver mas</Button>
+                        <Card.Title>{`$ ${element.precio}`}</Card.Title>
+                        <Button variant="primary" onClick={() => sendEvenNavigate('/book-info', element)}>ver más</Button>
                         <OverlayTrigger
                                 trigger="click"
                                 key={index}

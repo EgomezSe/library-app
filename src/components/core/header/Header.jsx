@@ -1,19 +1,13 @@
-import { useEffect } from 'react';
 import './Header.scss';
 import { useNavigate } from 'react-router-dom';
-import { useBookListEvent } from '../../../store/shopping-cart/shopping-cart.hook';
+import { useShoppingCartEvent } from '../../../hooks/shopping-cart/shopping-cart.hook';
 
 const Header = () => {
 
     const navigate = useNavigate();
-    const { getListBooksInfo } = useBookListEvent();
+    const { getListBooksInfo } = useShoppingCartEvent();
     const booksNumber = Object.values(getListBooksInfo()).length;
 
-
-
-    useEffect(() => {
-        //setPageInfo();
-    }, [])
 
 
     const sendEvenNavigate = (root) => {
@@ -22,7 +16,6 @@ const Header = () => {
 
     return (
         <>
-
             <div className='header-content'>
                 <div className='header-content__logo'></div>
                 <h2 className='header-content__title'>library</h2>

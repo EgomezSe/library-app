@@ -1,51 +1,71 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useBookListEvent } from '../../store/shopping-cart/shopping-cart.hook';
+import { useEffect, useState } from 'react';
+import { useShoppingCartEvent } from '../../hooks/shopping-cart/shopping-cart.hook';
 import Layout from '../../components/core/layout/Layout';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Image from 'react-bootstrap/Image';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Alert from 'react-bootstrap/Alert';
 import './shoppingCart.scss';
+import {ShoppingService} from "../../infrastructure/services/shoppingService.js";
+import {useNavigate} from "react-router-dom";
+import {useBooksListEvent} from "../../hooks/books-list/books-list.hook.js";
 
 
 const ShoppingCard = () => {
 
 
 
-    const { getListBooksInfo, setListBooksInfo } = useBookListEvent();
+    const { getListBooksInfo, setListBooksInfo } = useShoppingCartEvent();
+    const {setBooksListInfo} = useBooksListEvent();
+    const [show, setShow] = useState(false);
+    const navigate = useNavigate();
 
-    const prueba = Object.values(getListBooksInfo());
+    const booksList = Object.values(getListBooksInfo());
 
     let totalCost = 0;
 
     useEffect(() => {
+        if(booksList.length === 0) {
+            setShow(true);
+        }
     }, []);
 
     const deleteBook = (index) => {
-        prueba.splice(index, 1);
-        setListBooksInfo(prueba);
+        booksList.splice(index, 1);
+        setListBooksInfo(booksList);
     }
+
+    const shoppingBooks = async () => {
+        ShoppingService(totalCost, booksList).then( (response) => {
+            setBooksListInfo().then();
+            setListBooksInfo([]);
+            navigate('/success');
+        }).catch( error => {
+            navigate('/error');
+        });
+    }
+
 
     const viewShoppingCart = () => {
         const items = [];
-        prueba.forEach((element, index) => {
-            totalCost += element.cost;
+        booksList.forEach((element, index) => {
+            totalCost += element.precio;
             items.push(
                 <Card className='shopping-cart'>
                     <Card.Body>
                         <Row>
                             <Col xs={12} md={3} lg={2}>
-                                <Image className='shopping-img' src={element.img} rounded />
+                                <Image className='shopping-img' src={element.urlImagen} rounded />
                             </Col>
                             <Col xs={12} md={9} lg={10}>
-                                <Card.Title>{element.title} </Card.Title>
+                                <Card.Title>{element.titulo} </Card.Title>
                                 <Card.Text>
-                                    {element.subtitle}
+                                    {element.descripcion}
                                 </Card.Text>
                                 <Card.Title>
-                                    $ {element.cost}
+                                    $ {element.precio}
                                 </Card.Title>
                                 <Button variant="danger" onClick={() => deleteBook(index)} >Eliminar <i className='small material-icons'>remove_shopping_cart</i></Button>
                             </Col>
@@ -65,10 +85,18 @@ const ShoppingCard = () => {
 
                     {viewShoppingCart()}
                 </section>
+                { show ?
+                    <Alert variant="danger" onClose={() => setShow(false)} dismissible>
+                    <Alert.Heading>¡No tienes Libros en tu carrito de compras!</Alert.Heading>
+                    <p>
+                        Si deseas puedes añadir ejemplares y proceder a realizar el pago.
+                    </p>
+                    </Alert> : <></>
+                }
                 <section className='pay'>
                     <p className='pay__margin'>Total compra</p>
                     <h4 className='pay__margin' >$ {totalCost}</h4>
-                    <Button variant="primary pay__margin" size="lg">Pagar <i className='medium material-icons'>payment</i></Button>
+                    <Button variant="primary pay__margin" size="lg" onClick={() => shoppingBooks()}>Pagar <i className='medium material-icons'>payment</i></Button>
                 </section>
             </Layout>
 

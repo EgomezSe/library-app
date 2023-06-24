@@ -24,7 +24,11 @@ const InputSearch = ({onBookFilter}) => {
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1" >
               <InputGroup className="mb-3" onChange={handleChange}>
                 <Form.Control type="text" placeholder="Buscar"  />
-                <InputGroup.Text id="basic-addon2" ><button className='search_button' onClick={(event) => bookFilter()} ><i className='large material-icons'>search</i></button></InputGroup.Text>
+                <InputGroup.Text id="basic-addon2" >
+                  <button className='search_button' onClick={(event) => bookFilter()} >
+                    <i className='large material-icons'>search</i>
+                  </button>
+                </InputGroup.Text>
               </InputGroup>
             </Form.Group>
           </Form>
