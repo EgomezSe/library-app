@@ -15,7 +15,7 @@ const Catalogue = () => {
   const [show, setShow] = useState(false);
 
   const { getBooksListInfo } = useBooksListEvent();
-  const generalBooks = Object.values(getBooksListInfo()).filter( book => book.categoria === 'General');
+  const generalBooks = getBooksListInfo();
 
   useEffect(() => {
       setBooks(generalBooks)
